@@ -1,9 +1,16 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 
-const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFiltler }) => {
+const Formulario = ({
+  setAlert,
+  addColaborador,
+  data,
+  setData,
+  dataFilter,
+  setDataFiltler,
+}) => {
   const [datosColaborador, setDatosColaborador] = useState({
-    id:"",
+    id : "",
     nombre: "",
     correo: "",
     edad: "",
@@ -12,19 +19,16 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
     // en este punto estamos seteando los input
   });
 
-  
-  const limpiarFormulario = ()=>{
+  const limpiarFormulario = () => {
     setDatosColaborador({
-        id:"",
-        nombre: "",
-        correo: "",
-        edad: "",
-        cargo: "",
-        telefono: "",
+      id: "",
+      nombre: "",
+      correo: "",
+      edad: "",
+      cargo: "",
+      telefono: "",
     });
-   
-}
-
+  };
 
   const handleInputs = (e) => {
     const inputsID = {
@@ -63,19 +67,19 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
       datosColaborador.cargo.trim() === "" ||
       datosColaborador.telefono === ""
     ) {
-        console.log("completar datos");
+      console.log("completar datos");
       setAlert({
         color: "warning",
         texto: "Debe completar los campos",
       });
     } else if (!regexEmail.test(datosColaborador.correo)) {
-        console.log("error formato correo");
+      console.log("error formato correo");
       setAlert({
         color: "warning",
         texto: "Email con formato incompatible",
       });
     } else if (!regexTelef.test(datosColaborador.telefono)) {
-        console.log("error telefono");
+      console.log("error telefono");
       setAlert({
         color: "warning",
         texto:
@@ -84,15 +88,20 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
     } else {
       console.log("aqui");
       // agregar colaborador a la lista de colaboradores
-      const ids = data.map(dat=> {return dat.id});
-      setDatosColaborador(pDatosColaborador => ({...pDatosColaborador,
-        id: Math.max(...ids)+1}))
-  
-    //datosColaborador.id= Math.max(...ids);
-      setData(data => [...data, datosColaborador])
-      setDataFiltler(data);
-     //addColaborador(datosColaborador);
-     limpiarFormulario();
+      const ids = data.map((dat) => {
+        return dat.id;
+      });
+
+      const newId = Math.max(...ids) + 1;
+      console.log('nuevo id ' + newId)
+      datosColaborador.id = newId;
+      //setDatosColaborador({...datosColaborador, id: newId});
+      console.log(datosColaborador);
+
+      setData((data) => [...data, datosColaborador]);
+      setDataFiltler((dataFilter)=> [...dataFilter,datosColaborador]);
+
+      limpiarFormulario();
 
       setAlert({
         color: "success",
@@ -105,10 +114,12 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
 
   return (
     <div>
-      <h4>Agregar Colaborador</h4>
+      
 
       <form onSubmit={(e) => validarDatos(e)}>
-        <div>
+
+      <h4>Agregar Colaborador</h4>
+        <div className="ii">
           <input
             onChange={(e) => handleInputs(e)} // tambien onCHange se puede pasar de esta manera: onChange={handleInputs}
             value={datosColaborador.nombre}
@@ -119,7 +130,7 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
           />
         </div>
 
-        <div>
+        <div className="ii">
           <input
             onChange={(e) => handleInputs(e)}
             value={datosColaborador.correo}
@@ -130,7 +141,7 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
           />
         </div>
 
-        <div>
+        <div className="ii">
           <input
             onChange={(e) => handleInputs(e)}
             value={datosColaborador.edad}
@@ -141,7 +152,7 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
           />
         </div>
 
-        <div>
+        <div className="ii">
           <input
             onChange={(e) => handleInputs(e)}
             value={datosColaborador.cargo}
@@ -152,7 +163,7 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
           />
         </div>
 
-        <div>
+        <div className="ii">
           <input
             onChange={(e) => handleInputs(e)}
             value={datosColaborador.telefono}
@@ -163,7 +174,7 @@ const Formulario = ({setAlert, addColaborador,data,setData, dataFilter,setDataFi
           />
         </div>
 
-        <div>
+        <div className="ii ">
           <Button variant="dark" type="submit">
             Agregar Colaborador
           </Button>

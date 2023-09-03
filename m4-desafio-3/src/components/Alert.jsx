@@ -4,7 +4,7 @@ const Alert = ({texto, color}) => {
   return (
       <>
 
-      <div>
+      <div className='d-flex justify-content-center align-items-center'>
       <Badge bg={color}>
         {texto}
       </Badge>

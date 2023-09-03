@@ -1,6 +1,15 @@
 import Table from 'react-bootstrap/Table';
+import Button from "react-bootstrap/Button";
 
-const Listado = ({dataFilter}) => {
+const Listado = ({data,setData,dataFilter, setDataFiltler}) => {
+
+  const eliminar = (id)=>{
+   console.log("eliminar: "+id)
+   const newData =data.filter(col => col.id !== id); 
+    setData(newData)
+    setDataFiltler(newData)
+
+  }
   
   const colaboradores = dataFilter.map((colaborador) =>(
     <tr key={colaborador.id}>
@@ -10,7 +19,9 @@ const Listado = ({dataFilter}) => {
         <td>{colaborador.edad}</td>
         <td>{colaborador.cargo}</td>
         <td>{colaborador.telefono}</td>
-        <td>boton de eliminar </td>
+        <td> <Button variant="dark" onClick={() =>eliminar(colaborador.id)}>
+            Eliminar
+          </Button></td>
     </tr>
   ));
   

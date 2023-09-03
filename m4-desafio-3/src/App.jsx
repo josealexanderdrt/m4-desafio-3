@@ -1,5 +1,8 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 import { baseColaboradores } from '../baseColaboradores';
 import Listado from './components/Listado';
@@ -21,36 +24,42 @@ function App() {
   
   });
 
-  const addColaborador = (colaborador) =>{
-    const ids = data.map(dat => {return dat.id});
-    colaborador.id = Math.max(...ids)+1;
-
-    setData(data => [...data, colaborador])
-    setDataFiltler(data);
-  }
-  
-
-
 
   return (
     <>
-      <p>Hola mundo </p>
+
+  <Container>
+    <Row>
+    <Col>
+      
+      <h3>Lista de Colaboradores</h3>
       <Buscador 
       data={data}
       // se necesita la data original, es para que el buscador este pendiente
       setDataFiltler={setDataFiltler}
       // pero tambien va a necesitar la logica de dataFiltler, es lo que le vamos a pasar cuando escribamos dentro del input 
       />
-      
-
+    
+    </Col>
+    </Row>
+    
+  
+    <Row>
+    <Col>
       <Listado 
+      data={data}
+      setData={setData}
       dataFilter={dataFilter}
+      setDataFiltler={setDataFiltler}
       // Al listado tambien se le tiene que pasar el datafilter porque el compoenente tambien tiene que estar atento de lo que se va a filtrar,
       />
+
+    </Col>
       
+
+    <Col> 
       <Formulario 
       setAlert={setAlert}
-      addColaborador={addColaborador}
       data={data}
       setData={setData}
       dataFilter={dataFilter}
@@ -58,7 +67,12 @@ function App() {
       />
       <Alert color={alert.color} texto={alert.texto} />
     
+      </Col>
+    
+    
+      </Row>
 
+      </Container>
     </>
   );
 }
